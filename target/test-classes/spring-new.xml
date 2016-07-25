@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+	 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xmlns:aop="http://www.springframework.org/schema/aop"
+ xsi:schemaLocation="http://www.springframework.org/schema/beans 
+ http://www.springframework.org/schema/beans/spring-beans-4.3.xsd 
+ http://www.springframework.org/schema/aop
+ http://www.springframework.org/schema/aop/spring-aop-4.3.xsd"> 
+
+ 	<bean id="fetchuser" class="com.blog.methodInterceptor.FetchUser"></bean>
+    
+    <bean id="myInterceptor" class="com.blog.methodInterceptor.MyInterceptor"></bean>
+    
+    <!-- 方法拦截器（拦截Controller包中的所有被RequestMapping注解的方法） MethodInterceptor -->
+	<aop:config proxy-target-class="true">
+		<aop:pointcut id="myInterceptorPointcut"  expression="execution(public * com.blog.methodInterceptor.*.*(..)) "/>
+		<aop:advisor advice-ref="myInterceptor" pointcut-ref="myInterceptorPointcut" />
+	</aop:config> 
+ </beans>
